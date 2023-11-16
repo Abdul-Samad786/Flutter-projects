@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Flutter colomn example'),
+        ),
+        body: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [Text('A'), Text('B'), Text('C'), Text('D')],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('E'),
+                Text('F'),
+                Text('G'),
+                Text('H'),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('I'),
+                Text('J'),
+                Text('K'),
+                Text('L'),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
