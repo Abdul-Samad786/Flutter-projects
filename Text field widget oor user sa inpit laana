@@ -1,0 +1,59 @@
+import 'dart:html';
+
+import 'package:flutter/material.dart';
+
+void main() {
+  var nametext = TextEditingController();
+  var phone = TextEditingController();
+  runApp(
+    MaterialApp(
+        home: Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Booking details',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w200),
+        ),
+      ),
+      body: Padding(
+          padding: EdgeInsets.all(50),
+          child: Column(children: [
+            TextField(
+              controller: nametext,
+              decoration: InputDecoration(
+                  hintText: 'hello world',
+                  suffixIcon: const Icon(Icons.email),
+                  suffix: Text('user name'),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      )),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.green,
+                        width: 3,
+                      ))),
+            ),
+            TextField(
+              keyboardType: TextInputType.phone,
+              controller: phone,
+              decoration: InputDecoration(
+                  hintText: 'Enter phone number here..',
+                  suffix: Text('user phone number'),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.pink, width: 3),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 10,
+                      ))),
+            ),
+            ElevatedButton(onPressed: () {}, child: const Text('log in'))
+          ])),
+    )),
+  );
+}
