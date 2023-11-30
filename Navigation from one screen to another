@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import 'package:practice/hello.dart';
+
+void main() {
+  runApp(
+    MaterialApp(
+      home: Directionality(
+        textDirection: TextDirection.ltr, // or TextDirection.rtl
+        child: LoginPage(),
+      ),
+    ),
+  );
+}
+
+// ignore: must_be_immutable
+class LoginPage extends StatelessWidget {
+  var name = TextEditingController();
+  var logIn = TextEditingController();
+
+  LoginPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Log in page'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextField(
+              controller: name,
+              decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            TextField(
+              controller: logIn,
+              decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => hello()));
+              },
+              child: const Text('Please click'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+class hello extends StatelessWidget {
+  const hello({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('hello world'),
+      ),
+      body: const Center(child: Text('hello flutter developer!!')),
+    );
+  }
+}
