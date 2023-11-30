@@ -1,0 +1,58 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(My_page());
+}
+
+class My_page extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      title: 'hello world,',
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+      ),
+      home: page(),
+    );
+  }
+}
+
+class page extends StatefulWidget {
+  @override
+  State<page> createState() {
+    return pagestate();
+  }
+}
+
+class pagestate extends State<page> {
+  var value = 0;
+  void bdhaaana() {
+    value++;
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('kasa ho'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              'count:$value',
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  bdhaaana();
+                },
+                child: Text('Please click here!!')),
+          ],
+        ),
+      ),
+    );
+  }
+}
