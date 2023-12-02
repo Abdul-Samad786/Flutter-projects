@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(stylish_Container());
+}
+
+class stylish_Container extends StatefulWidget {
+  @override
+  State<stylish_Container> createState() {
+    return Stylish_State();
+  }
+}
+
+class Stylish_State extends State<stylish_Container> {
+  late double my_obecity = 1.0;
+  bool is_visible = true;
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.ltr, // Adjust the text direction as needed
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('stylish container'),
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              AnimatedOpacity(
+                opacity: my_obecity,
+                duration: const Duration(seconds: 1),
+                //curve: Curves.slowMiddle,
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  color: Colors.pink,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (is_visible) {
+                    my_obecity = 0.0;
+                    is_visible = false;
+                    setState(() {});
+                  } else {
+                    my_obecity = 1.0;
+                    is_visible = true;
+                    setState(() {});
+                  }
+                },
+                child: const Text('click for invisible!!'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
