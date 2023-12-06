@@ -1,0 +1,27 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+
+class First_page extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('kasa ho'),
+        ),
+        body: Center(
+            child: AnimatedTextKit(
+          animatedTexts: [
+            FadeAnimatedText('Hello Flutter developer!!',
+                textStyle: const TextStyle(fontSize: 25)),
+            RotateAnimatedText('kasa ho',
+                textStyle: const TextStyle(fontSize: 25))
+          ],
+          totalRepeatCount: 4,
+        )),
+      ),
+    );
+  }
+}
