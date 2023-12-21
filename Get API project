@@ -1,0 +1,74 @@
+import 'dart:convert';
+import 'dart:core';
+import 'dart:core';
+import 'dart:core';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:practice/PostModel.dart';
+
+void main() {
+  runApp(Homepage());
+}
+
+class Homepage extends StatelessWidget {
+  List<classmodel> Apilist = [];
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Homepage'),
+          ),
+          body: FutureBuilder(
+            future: getapi(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<classmodel>> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: Apilist.length,
+                  itemBuilder: (context, index) => Card(
+                    elevation: 15,
+                    child: Column(children: [
+                      parmeter('name', snapshot.data![index].id.toString()),
+                      parmeter('username',
+                          snapshot.data![index].username.toString()),
+                      parmeter('email', snapshot.data![index].email.toString()),
+                      parmeter('city',
+                          snapshot.data![index].address?.city.toString())
+                    ]),
+                  ),
+                );
+              } else {
+                return const Text('Loading');
+              }
+            },
+          )),
+    );
+  }
+
+  Future<List<classmodel>> getapi() async {
+    final response =
+        await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
+    var data = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      for (Map<String, dynamic> i in data) {
+        Apilist.add(classmodel.fromJson(i));
+      }
+      return Apilist;
+    } else {
+      return Apilist;
+    }
+  }
+}
+
+class parmeter extends StatelessWidget {
+  String title;
+  var data;
+  parmeter(this.title, this.data);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('$title:$data');
+  }
+}
