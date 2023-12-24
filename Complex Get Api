@@ -1,0 +1,89 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class Product {
+  int id;
+  String title;
+  double price;
+  List<String> images;
+
+  Product({
+    required this.id,
+    required this.title,
+    required this.price,
+    required this.images,
+  });
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      title: json['title'],
+      price: json['price'].toDouble(),
+      images:
+          (json['images'] as List).map((image) => image.toString()).toList(),
+    );
+  }
+}
+
+void main() {
+  runApp(PicsApi());
+}
+
+class PicsApi extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Practice API'),
+        ),
+        body: FutureBuilder(
+          future: getFunction(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                Product product = snapshot.data as Product;
+                return Container(
+                  height: 250,
+                  width: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: product.images.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Image.network(
+                          product.images[index],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<Product> getFunction() async {
+    try {
+      var response =
+          await http.get(Uri.parse('https://dummyjson.com/products'));
+      if (response.statusCode == 200) {
+        var body = jsonDecode(response.body);
+        return Product.fromJson(body['products'][0]);
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+}
