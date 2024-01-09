@@ -1,0 +1,88 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(SignupScreen());
+}
+
+class SignupScreen extends StatefulWidget {
+  @override
+  State<SignupScreen> createState() {
+    return StateSignup();
+  }
+}
+
+void signupFun(String email, String password) async {
+  try {
+    http.Response response = await http.post(
+      Uri.parse('https://reqres.in/api/register'),
+      body: {
+        'email': email,
+        'password': password,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body.toString());
+      print(data['id']);
+      print(data['token']);
+      print('Account created successfully');
+    }
+  } catch (e) {
+    print(e.toString());
+  }
+}
+
+class StateSignup extends State<SignupScreen> {
+  TextEditingController emailControl = TextEditingController();
+  TextEditingController passwordControl = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Post API Practice'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                TextField(
+                  controller: emailControl,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter Email',
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: passwordControl,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter Password',
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                InkWell(
+                  child: const Text('Sign Up'),
+                  onTap: () {
+                    signupFun(
+                      emailControl.text.toString(),
+                      passwordControl.text.toString(),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
