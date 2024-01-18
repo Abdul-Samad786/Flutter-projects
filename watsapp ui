@@ -1,0 +1,99 @@
+import 'package:flutter/material.dart';
+import 'Watsapp.dart'; // Uncomment this line
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Watsapp(),
+    );
+  }
+}
+
+class Watsapp extends StatelessWidget {
+  const Watsapp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            const Icon(Icons.search),
+            const SizedBox(
+              width: 4,
+            ),
+            PopupMenuButton(
+                icon: const Icon(Icons.more_vert_outlined),
+                itemBuilder: (context) => [
+                      const PopupMenuItem(value: '1', child: Text('new group')),
+                      const PopupMenuItem(value: '1', child: Text('Settings')),
+                      const PopupMenuItem(value: '1', child: Text('Log out'))
+                    ])
+          ],
+          backgroundColor: Colors.teal,
+          centerTitle: false,
+          title: const Text('Watsapp'),
+          bottom: const TabBar(
+            tabs: [
+              Icon(Icons.camera_alt),
+              Text('Chats'),
+              Text('Status'),
+              Text('Calls'),
+            ],
+          ),
+        ),
+        body: TabBarView(children: [
+          Text('Camera'),
+          ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) => const ListTile(
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg'),
+              ),
+              title: Text('Abdul Samad'),
+              subtitle: Text('Hello bro'),
+              trailing: CircleAvatar(
+                radius: 12,
+                backgroundColor: Colors.green,
+                child: Text('2'),
+              ),
+            ),
+          ),
+          ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) => const ListTile(
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg'),
+              ),
+              title: Text('Rana saab'),
+              subtitle: Text('30m ago'),
+            ),
+          ),
+          ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) => const ListTile(
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg'),
+              ),
+              title: Text('Hello bro'),
+              //Text(index/2==0?'You missed video call':'you missed voice call')
+              subtitle: Text('you missed call'),
+              trailing: Icon(Icons.video_call),
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+}
