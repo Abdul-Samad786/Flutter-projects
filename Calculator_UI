@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import 'package:practice/lib/Calculator_button.dart';
+
+void main() {
+  runApp(Calculator());
+}
+
+class Calculator extends StatefulWidget {
+  @override
+  State<Calculator> createState() {
+    return Calculator_state();
+  }
+}
+
+class Calculator_state extends State<Calculator> {
+  var data = '';
+  var answer = '';
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+            backgroundColor: Colors.black,
+            appBar: AppBar(
+              backgroundColor: Colors.green,
+              title: const Text('Calculator App'),
+            ),
+            body: Padding(
+                padding: EdgeInsets.only(top: 12),
+                child: Column(children: [
+                  Text(
+                    data.toString(),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Expanded(
+                      child: Column(
+                    children: [
+                      Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Calculator_button(
+                              col: Colors.grey,
+                              title: 'Ac',
+                              onPress: () {
+                                data = '${data}AC';
+                                setState(() {});
+                              }),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Calculator_button(
+                              col: Colors.grey,
+                              title: '+/-',
+                              onPress: () => data = '${data}+/-'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Calculator_button(
+                              col: Colors.grey,
+                              title: '%',
+                              onPress: () => data = '${data}%'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Calculator_button(
+                              col: Colors.grey,
+                              title: '',
+                              onPress: () => data = '${data}%'),
+                        ),
+                      ])
+                    ],
+                  ))
+                ]))));
+  }
+}
