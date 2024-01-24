@@ -1,0 +1,75 @@
+
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  runApp(shared_pref());
+}
+
+class shared_pref extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return Shared_state();
+  }
+}
+
+// ignore: camel_case_types
+class Shared_state extends State<shared_pref> {
+  var namevalue = "no value saved";
+  var control = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    display();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Shared preference'),
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: TextField(
+                  controller: control,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.green),
+                    ),
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  var pref = await SharedPreferences.getInstance();
+                  pref.setString("name", control.text); // Fix: use control.text
+                  display(); // Fix: Update the displayed value
+                },
+                child: const Text('Click'),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(namevalue),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void display() async {
+    var pref = await SharedPreferences.getInstance();
+    var data = pref.getString("name");
+    setState(() {
+      namevalue = data ?? 'No value saved';
+    });
+  }
+}
