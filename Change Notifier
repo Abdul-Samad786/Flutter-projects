@@ -1,0 +1,97 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+//import 'package:practice/Provider.dart';
+//import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:practice/Notifier.dart';
+import 'package:practice/Provider.dart';
+import 'package:provider/provider.dart';
+import 'dart:async';
+//import 'package:practice/Provider.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return App_State();
+  }
+}
+
+class App_State extends State<MyApp> {
+  int value = 0;
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => provider(),
+      child: MaterialApp(
+        home: Notifier(),
+      ),
+    );
+  }
+}
+//yaa dosri file ka code ha
+import 'package:flutter/material.dart';
+import 'package:practice/Provider.dart';
+import 'package:provider/provider.dart';
+
+class Notifier extends StatefulWidget {
+  @override
+  _NotifierState createState() => _NotifierState();
+}
+
+class _NotifierState extends State<Notifier> {
+  int data = 0; // assuming value is an integer variable
+  @override
+  Widget build(BuildContext context) {
+    var countmodifer = Provider.of<provider>(context, listen: false);
+    print('only this build');
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
+        title: const Text(
+          'State Management',
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Consumer<provider>(
+
+                // ignore: avoid_print
+                builder: (context, value, child) {
+              print('Sona bhai');
+              return Text(value.count.toString());
+            }),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                countmodifer.Increment();//Ya
+              },
+              child: const Text('Increment it'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+//Ya bhi dosri file ka code ha
+import 'package:flutter/material.dart';
+
+class provider with ChangeNotifier {
+  int count = 60;
+  int getcount() {
+    return count;
+  }
+
+  void Increment() {
+    count++;
+    notifyListeners();
+  }
+}
