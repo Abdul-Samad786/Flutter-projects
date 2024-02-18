@@ -1,0 +1,19 @@
+//import 'dart:html';
+
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
+import 'package:practice/Login-screen.dart';
+import 'package:practice/Url.dart';
+
+class Networking {
+  Future<dynamic> postApi(dynamic data) async {
+    //  toast_message('Hoo gya');
+    try {
+      final api = await post(Uri.parse(Url().post_api), body: data);
+      toast_message(api.body);
+    } catch (e) {
+      print('The error comes');
+    }
+  }
+}
