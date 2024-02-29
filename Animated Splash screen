@@ -1,0 +1,60 @@
+import 'dart:async';
+import 'dart:js_util';
+
+import 'package:covid_tracker/View/flutter.dart';
+import 'package:flutter/material.dart';
+import 'dart:math' as math;
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController controller =
+      AnimationController(duration: const Duration(seconds: 10), vsync: this)
+        ..repeat();
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 12), () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => flutter()));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AnimatedBuilder(
+                animation: controller,
+                builder: ((context, child) => Center(
+                      child: Transform.rotate(
+                        angle: controller.value * 2.0 * math.pi,
+                        child: Column(children: [
+                          Image.asset('images/virus.png'),
+                        ]),
+                      ),
+                    ))),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              'Covid tracker\n App',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
